@@ -13,10 +13,15 @@ const TODO_FILE = path.join(__dirname, "todoData.json");
 app.use(express.static(path.join(__dirname, "../frontend")));
 
 // API Routes
-app.get("/api/todos", (req, res) => {
-    const data = fs.readFileSync(TODO_FILE, "utf-8");
-    res.json(JSON.parse(data));
+// Serve frontend
+app.get("/", (req, res) => {
+    res.sendFile(path.join(__dirname, "../frontend/index.html"), err => {
+        if (err) {
+            res.status(500).send("Frontend not found!");
+        }
+    });
 });
+
 
 app.post("/api/todos", (req, res) => {
     const todos = JSON.parse(fs.readFileSync(TODO_FILE, "utf-8"));
