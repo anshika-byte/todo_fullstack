@@ -22,6 +22,13 @@ app.get("/", (req, res) => {
     });
 });
 
+app.get("/api/todos", (req, res) => {
+    if (!fs.existsSync(TODO_FILE)) {
+        fs.writeFileSync(TODO_FILE, JSON.stringify([]));
+    }
+    const todos = JSON.parse(fs.readFileSync(TODO_FILE, "utf-8"));
+    res.json(todos);
+});
 
 app.post("/api/todos", (req, res) => {
     const todos = JSON.parse(fs.readFileSync(TODO_FILE, "utf-8"));
@@ -39,9 +46,9 @@ app.delete("/api/todos/:id", (req, res) => {
 });
 
 // Root route - serve frontend
-app.get("/", (req, res) => {
-    res.sendFile(path.join(__dirname, "../frontend/index.html"));
-});
+// app.get("/", (req, res) => {
+//     res.sendFile(path.join(__dirname, "../frontend/index.html"));
+// });
 
 // Health check (optional)
 app.get("/health", (req, res) => {
