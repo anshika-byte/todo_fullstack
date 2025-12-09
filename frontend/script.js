@@ -1,4 +1,4 @@
-const backendURL = "http://localhost:5000";
+const backendURL = "http://16.16.207.234:5000/api";
 
 async function loadTodos() {
     const res = await fetch(`${backendURL}/todos`);
